@@ -1,0 +1,82 @@
+# spring
+spring:
+  # application
+  application:
+    name: todo
+
+  # profiles
+  profiles:
+    active: standalone
+
+  # pid:
+  pid:
+    file: etc/pid/todo.pid
+
+  # datasource
+  datasource:
+    platform: h2
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:./etc/database/tododb;AUTO_SERVER=TRUE
+    username: ascpm
+    password: ascpm
+    hikari:
+      pool-name: hikariTodo
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 500
+        prepStmtCacheSqlLimit: 2048
+        minimum-idel: 1
+        maximum-pool-size: 5
+  #        initialization-mode: always
+  #        schema: etc/database/schema/schema-h2.sql
+  #        data: etc/database/data/data-h2.sql
+
+  # jpa
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        show-sql: true
+        user_sql_comments: true
+        format_sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+  # h2
+  h2:
+    console:
+      enabled: true
+      path: /database
+      settings:
+        trace: false
+        web-allow-others: false
+
+# server
+server:
+  use-forward-headers: true
+  tomcat:
+    remote-ip-header: X-Forwarded-For
+    protocol-header: X-Forwarded-Proto
+    port-header: X-Forwarded-Port
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        name: TODO_LOCAL
+  port: 8100
+
+# logging
+logging:
+  file: etc/log/todo.log
+  path: etc/log
+  level:
+    root: info
+    org:
+      springframework: info
+      hibernate: info
+
