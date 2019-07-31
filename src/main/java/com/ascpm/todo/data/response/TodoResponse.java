@@ -24,8 +24,4 @@ public class TodoResponse implements Serializable {
     private String createdTime;
     private String modifiedTime;
 
-    public static TodoResponse empty() {
-        return TodoResponse.builder().build();
-    }
-
 }

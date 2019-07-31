@@ -1,5 +1,6 @@
 package com.ascpm.todo.data.request;
 
+import com.ascpm.todo.data.entity.TodoEntity;
 import lombok.*;
 
 import java.io.Serializable;
@@ -21,5 +22,24 @@ public class TodoRequest implements Serializable {
     private long prevId;
     private long nextId;
     private boolean done;
+
+    public TodoEntity toCreate() {
+        return TodoEntity
+                .builder()
+                .uid(this.uid)
+                .name(this.name)
+                .prevId(-1L)
+                .nextId(this.nextId)
+                .done(false)
+                .build();
+    }
+
+    public void toModify(TodoEntity entity) {
+        entity.setUid(this.uid);
+        entity.setName(this.name);
+        entity.setPrevId(this.prevId);
+        entity.setNextId(this.nextId);
+        entity.setDone(this.done);
+    }
 
 }

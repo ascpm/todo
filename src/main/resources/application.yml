@@ -64,7 +64,7 @@ server:
     port-header: X-Forwarded-Port
     uri-encoding: UTF-8
   servlet:
-    context-path: /api
+    context-path: /
     session:
       cookie:
         name: TODO_LOCAL

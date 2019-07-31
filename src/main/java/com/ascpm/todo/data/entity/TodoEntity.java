@@ -1,11 +1,14 @@
 package com.ascpm.todo.data.entity;
 
 import com.ascpm.todo.data.entity.comm.MappingEntity;
+import com.ascpm.todo.data.response.TodoResponse;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Entity
 @Table(name = "`todo`")
@@ -52,6 +55,22 @@ public class TodoEntity extends MappingEntity implements Serializable {
         this.prevId = prevId;
         this.nextId = nextId;
         this.done = done;
+    }
+
+    public TodoResponse toResponse() {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return TodoResponse
+                .builder()
+                .id(this.id)
+                .uid(this.uid)
+                .name(this.name)
+                .prevId(this.prevId)
+                .nextId(this.nextId)
+                .createdTime(formatter.format(this.getCreatedTime().toLocalDateTime()))
+                .modifiedTime(Optional.ofNullable(this.getModifiedTime())
+                        .map(mt -> formatter.format(mt.toLocalDateTime()))
+                        .orElse(""))
+                .build();
     }
 
 }
